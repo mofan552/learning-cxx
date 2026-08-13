@@ -4,8 +4,9 @@
 
 struct Fibonacci {
     int numbers[11];
-    // TODO: 修改方法签名和实现，使测试通过
-    int get(int i) {
+    // const 修饰的是隐含的 this，只有 const 方法才能在 const/constexpr 对象上调用
+    constexpr int get(int i) const {
+        return numbers[i];
     }
 };
 

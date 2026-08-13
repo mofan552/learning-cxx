@@ -6,12 +6,14 @@
 
 template<class k, class v>
 bool key_exists(std::map<k, v> const &map, k const &key) {
-    // TODO: 实现函数
+    // const map 上不能用 operator[]（它会插入元素），用 find 与 end 比较
+    return map.find(key) != map.end();
 }
 
 template<class k, class v>
 void set(std::map<k, v> &map, k key, v value) {
-    // TODO: 实现函数
+    // insert_or_assign：键不存在则插入，已存在则覆盖，正好满足两种调用场景
+    map.insert_or_assign(std::move(key), std::move(value));
 }
 
 // ---- 不要修改以下代码 ----

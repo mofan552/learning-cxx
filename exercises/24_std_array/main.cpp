@@ -8,21 +8,23 @@
 int main(int argc, char **argv) {
     {
         std::array<int, 5> arr{{1, 2, 3, 4, 5}};
-        ASSERT(arr.size() == ?, "Fill in the correct value.");
-        ASSERT(sizeof(arr) == ?, "Fill in the correct value.");
+        // std::array 不做动态分配，长度是模板参数，sizeof 就是元素总字节数
+        ASSERT(arr.size() == 5, "Fill in the correct value.");
+        ASSERT(sizeof(arr) == 20, "Fill in the correct value.");
         int ans[]{1, 2, 3, 4, 5};
-        ASSERT(std::memcmp(arr.?, ans, ?) == 0, "Fill in the correct values.");
+        ASSERT(std::memcmp(arr.data(), ans, sizeof(ans)) == 0, "Fill in the correct values.");
     }
     {
         std::array<double, 8> arr;
-        ASSERT(arr.size() == ?, "Fill in the correct value.");
-        ASSERT(sizeof(arr) == ?, "Fill in the correct value.");
+        ASSERT(arr.size() == 8, "Fill in the correct value.");
+        ASSERT(sizeof(arr) == 64, "Fill in the correct value.");
     }
     {
+        // 字面量 20 个字符加上结尾的 '\0'，正好占满 21 个元素
         std::array<char, 21> arr{"Hello, InfiniTensor!"};
-        ASSERT(arr.size() == ?, "Fill in the correct value.");
-        ASSERT(sizeof(arr) == ?, "Fill in the correct value.");
-        ASSERT(std::strcmp(arr.?, "Hello, InfiniTensor!") == 0, "Fill in the correct value.");
+        ASSERT(arr.size() == 21, "Fill in the correct value.");
+        ASSERT(sizeof(arr) == 21, "Fill in the correct value.");
+        ASSERT(std::strcmp(arr.data(), "Hello, InfiniTensor!") == 0, "Fill in the correct value.");
     }
     return 0;
 }

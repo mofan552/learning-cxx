@@ -10,7 +10,10 @@ struct Tensor {
 
     Tensor(unsigned int const shape_[N]) {
         unsigned int size = 1;
-        // TODO: 填入正确的 shape 并计算 size
+        for (unsigned int i = 0; i < N; ++i) {
+            shape[i] = shape_[i];
+            size *= shape_[i];
+        }
         data = new T[size];
         std::memset(data, 0, size * sizeof(T));
     }
@@ -34,7 +37,8 @@ private:
         unsigned int index = 0;
         for (unsigned int i = 0; i < N; ++i) {
             ASSERT(indices[i] < shape[i], "Invalid index");
-            // TODO: 计算 index
+            // 连续存储下的行优先展开：每进一维，已有下标先乘当前维长度再加上本维坐标
+            index = index * shape[i] + indices[i];
         }
         return index;
     }

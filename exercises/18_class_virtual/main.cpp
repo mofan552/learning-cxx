@@ -42,38 +42,42 @@ int main(int argc, char **argv) {
     C c;
     D d;
 
-    ASSERT(a.virtual_name() == '?', MSG);
-    ASSERT(b.virtual_name() == '?', MSG);
-    ASSERT(c.virtual_name() == '?', MSG);
-    ASSERT(d.virtual_name() == '?', MSG);
-    ASSERT(a.direct_name() == '?', MSG);
-    ASSERT(b.direct_name() == '?', MSG);
-    ASSERT(c.direct_name() == '?', MSG);
-    ASSERT(d.direct_name() == '?', MSG);
+    // 对象本身调用：静态类型即动态类型，虚与非虚结果一致。
+    // 例外是 D 没有覆盖 virtual_name（C 已将其标为 final），所以继承到 C 的版本。
+    ASSERT(a.virtual_name() == 'A', MSG);
+    ASSERT(b.virtual_name() == 'B', MSG);
+    ASSERT(c.virtual_name() == 'C', MSG);
+    ASSERT(d.virtual_name() == 'C', MSG);
+    ASSERT(a.direct_name() == 'A', MSG);
+    ASSERT(b.direct_name() == 'B', MSG);
+    ASSERT(c.direct_name() == 'C', MSG);
+    ASSERT(d.direct_name() == 'D', MSG);
 
     A &rab = b;
     B &rbc = c;
     C &rcd = d;
 
-    ASSERT(rab.virtual_name() == '?', MSG);
-    ASSERT(rbc.virtual_name() == '?', MSG);
-    ASSERT(rcd.virtual_name() == '?', MSG);
-    ASSERT(rab.direct_name() == '?', MSG);
-    ASSERT(rbc.direct_name() == '?', MSG);
-    ASSERT(rcd.direct_name() == '?', MSG);
+    // 通过基类引用调用：virtual_name 按运行时的动态类型分派，
+    // direct_name 不是虚函数，按引用的静态类型静态绑定。
+    ASSERT(rab.virtual_name() == 'B', MSG);
+    ASSERT(rbc.virtual_name() == 'C', MSG);
+    ASSERT(rcd.virtual_name() == 'C', MSG);
+    ASSERT(rab.direct_name() == 'A', MSG);
+    ASSERT(rbc.direct_name() == 'B', MSG);
+    ASSERT(rcd.direct_name() == 'C', MSG);
 
     A &rac = c;
     B &rbd = d;
 
-    ASSERT(rac.virtual_name() == '?', MSG);
-    ASSERT(rbd.virtual_name() == '?', MSG);
-    ASSERT(rac.direct_name() == '?', MSG);
-    ASSERT(rbd.direct_name() == '?', MSG);
+    ASSERT(rac.virtual_name() == 'C', MSG);
+    ASSERT(rbd.virtual_name() == 'C', MSG);
+    ASSERT(rac.direct_name() == 'A', MSG);
+    ASSERT(rbd.direct_name() == 'B', MSG);
 
     A &rad = d;
 
-    ASSERT(rad.virtual_name() == '?', MSG);
-    ASSERT(rad.direct_name() == '?', MSG);
+    ASSERT(rad.virtual_name() == 'C', MSG);
+    ASSERT(rad.direct_name() == 'A', MSG);
 
     return 0;
 }

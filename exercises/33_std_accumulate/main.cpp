@@ -11,7 +11,9 @@ int main(int argc, char **argv) {
     //       - 形状为 shape；
     //       - 连续存储；
     //       的张量占用的字节数
-    // int size =
+    // 以单个元素的字节数作为初值，逐维乘上形状，累积出总字节数
+    int size = std::accumulate(shape, shape + 4, static_cast<int>(sizeof(DataType)),
+                               [](int acc, int dim) { return acc * dim; });
     ASSERT(size == 602112, "4x1x3x224x224 = 602112");
     return 0;
 }

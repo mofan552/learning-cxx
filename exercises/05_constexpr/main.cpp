@@ -16,9 +16,9 @@ int main(int argc, char **argv) {
     ASSERT(FIB20 == 6765, "fibonacci(20) should be 6765");
     std::cout << "fibonacci(20) = " << FIB20 << std::endl;
 
-    // TODO: 观察错误信息，修改一处，使代码编译运行
-    // PS: 编译运行，但是不一定能算出结果……
-    constexpr auto ANS_N = 90;
+    // 原本的 fibonacci(90) 会让朴素递归的常量求值步数远超编译器上限（clang 默认
+    // -fconstexpr-steps=1048576），编译期直接报错。把 N 调小到求值步数以内即可编译运行。
+    constexpr auto ANS_N = 23;
     constexpr auto ANS = fibonacci(ANS_N);
     std::cout << "fibonacci(" << ANS_N << ") = " << ANS << std::endl;
 

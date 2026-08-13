@@ -10,10 +10,12 @@ static int func(int param) {
 
 int main(int argc, char **argv) {
     // TODO: 将下列 `?` 替换为正确的数字
-    ASSERT(func(5) == ?, "static variable value incorrect");
-    ASSERT(func(4) == ?, "static variable value incorrect");
-    ASSERT(func(3) == ?, "static variable value incorrect");
-    ASSERT(func(2) == ?, "static variable value incorrect");
-    ASSERT(func(1) == ?, "static variable value incorrect");
+    // static_ 只在首次调用时用 param 初始化（此处为 5），之后每次调用后自增，
+    // 与后续传入的 param 无关。
+    ASSERT(func(5) == 5, "static variable value incorrect");
+    ASSERT(func(4) == 6, "static variable value incorrect");
+    ASSERT(func(3) == 7, "static variable value incorrect");
+    ASSERT(func(2) == 8, "static variable value incorrect");
+    ASSERT(func(1) == 9, "static variable value incorrect");
     return 0;
 }

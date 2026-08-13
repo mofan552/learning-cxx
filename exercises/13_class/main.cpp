@@ -13,12 +13,11 @@ class Fibonacci {
     int cached;
 
 public:
-    // TODO: 实现构造器
-    // Fibonacci()
+    // private 字段只能由类内部初始化，因此需要无参构造器铺好递推初值
+    Fibonacci() : cache{0, 1}, cached(2) {}
 
-    // TODO: 实现正确的缓存优化斐波那契计算
     size_t get(int i) {
-        for (; false; ++cached) {
+        for (; cached <= i; ++cached) {
             cache[cached] = cache[cached - 1] + cache[cached - 2];
         }
         return cache[i];
